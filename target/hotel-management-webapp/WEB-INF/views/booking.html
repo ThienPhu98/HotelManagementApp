@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <th:block th:replace="~{/layout/head::head}" />
+    <title>Booking</title>
+    <th:block th:replace="~{/layout/script::scriptAll}" />
+</head>
+<body data-layout="horizontal">
+
+<div id="wrapper">
+    <th:block th:replace="~{/layout/topnav::topnav}" />
+    <div class="content-page">
+        <div class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="page-title-box">
+                            <div class="page-title-right">
+                                <ol class="breadcrumb m-0">
+                                    <li class="breadcrumb-item">
+                                        <a href="javascript: void(0);">
+                                            <i class="bi bi-house"></i>
+                                            Home
+                                        </a>
+                                    </li>
+                                    <li class="breadcrumb-item active">
+                                        <i class="fas fa-bed"></i> Booking
+                                    </li>
+                                </ol>
+                            </div>
+                            <h4 class="page-title">Booking Room</h4>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card" style="width: 30rem;">
+                                <img src="/assets/image/standard.jpg" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">Standard Room</h5>
+                                    <p class="card-text">Price: From 20$ to 30$</p>
+                                    <a class="btn btn-primary standard-modal">Booking</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card" style="width: 30rem;">
+                                <img src="/assets/image/superior.jpg" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">Superior Room</h5>
+                                    <p class="card-text">Price: From 30$ to 40$</p>
+                                    <a class="btn btn-primary superior-modal">Booking</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card" style="width: 30rem;">
+                                <img src="/assets/image/deluxe.png" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">Deluxe Room</h5>
+                                    <p class="card-text">Price: From 45$ to 50$</p>
+                                    <a class="btn btn-primary deluxe-modal">Booking</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="card" style="width: 30rem;">
+                                <img src="/assets/image/suite.jpg" class="card-img-top">
+                                <div class="card-body">
+                                    <h5 class="card-title">Suite Room</h5>
+                                    <p class="card-text">Price: From 50$ to 70$</p>
+                                    <a class="btn btn-primary suite-modal">Booking</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <th:block th:replace="~{/layout/footer::footer}" />
+    </div>
+
+    <th:block th:replace="~{/layout/right-bar::right-bar}" />
+
+    <th:block th:replace="~{/reservation/fragmentModalDeluxe::frm-deluxe}" />
+
+    <th:block th:replace="~{/reservation/fragmentModalStandard::frm-standard}" />
+
+    <th:block th:replace="~{/reservation/fragmentModalSuite::frm-suite}" />
+
+    <th:block th:replace="~{/reservation/fragmentModalSuperior::frm-superior}" />
+
+    <script src="/assets/js/app.js"></script>
+
+    <script>
+
+        let page = {
+            urls: {
+                saveNew: "http://localhost:8080/api/bookings/create"
+            }
+        }
+
+        let reservation = new Reservation();
+
+        let room = new Room();
+
+        $("a.standard-modal").on("click", function () {
+            $('#modalStandardRegistration').modal('show');
+        });
+
+        $("a.superior-modal").on("click", function () {
+            $('#modalSuperiorRegistration').modal('show');
+        });
+
+        $("a.deluxe-modal").on("click", function () {
+            $('#modalDeluxeRegistration').modal('show');
+        });
+
+        $("a.suite-modal").on("click", function () {
+            $('#modalSuiteRegistration').modal('show');
+        });
+
+
+        $("#btnCreateStandard").on("click", function () {
+
+            room.id = $("#roomIdSTD").val();
+
+            reservation.fullName = $("#fullNameSTD").val();
+            reservation.email = $("#emailSTD").val();
+            reservation.phone = $("#phoneSTD").val();
+            reservation.address = $("#addressSTD").val();
+            reservation.guaranteeFee = $("#guaranteeFeeSTD").val();
+            reservation.methodPayment = $("#methodPaymentSTD").val();
+            reservation.room = room;
+
+            $.ajax({
+                type: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: page.urls.saveNew,
+                data: JSON.stringify(reservation)
+            }).done( (data) => {
+                reservation = data;
+
+                App.showSuccessAlert("Booking Successful!");
+                $('#modalStandardRegistration').modal('hide');
+
+            }).fail( (jqXHR, textStatus, errorThrown) => {
+                $("#modalStandardRegistration .modal-body .modal-alert-danger").empty();
+                $("#modalStandardRegistration .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+
+                let str = ``;
+                $.each( jqXHR.responseJSON, function( key, value ) {
+                    str += `<label id="${key}-error" class="error" for="${key}">${value}</label>`;
+                    $("#" + key).addClass("error");
+                });
+                $("#modalStandardRegistration .modal-body .modal-alert-danger").html(str);
+            });
+        });
+
+        $("#btnCreateSuperior").on("click", function () {
+            room.id = $("#roomIdSUP").val();
+
+            let bookingCode = Math.floor(Math.random()*9000) + 1000;
+
+            reservation.bookingCode = bookingCode;
+            reservation.fullName = $("#fullNameSUP").val();
+            reservation.email = $("#emailSUP").val();
+            reservation.phone = $("#phoneSUP").val();
+            reservation.address = $("#addressSUP").val();
+            reservation.guaranteeFee = $("#guaranteeFeeSUP").val();
+            reservation.methodPayment = $("#methodPaymentSUP").val();
+            reservation.room = room;
+
+            $.ajax({
+                type: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: page.urls.saveNew,
+                data: JSON.stringify(reservation)
+            }).done( (data) => {
+                reservation = data;
+
+                App.showSuccessAlert("Booking Successful!");
+
+                $('#modalSuperiorRegistration').modal('hide');
+
+            }).fail( (jqXHR, textStatus, errorThrown) => {
+                $("#modalSuperiorRegistration .modal-body .modal-alert-danger").empty();
+                $("#modalSuperiorRegistration .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+
+                let str = ``;
+                $.each( jqXHR.responseJSON, function( key, value ) {
+                    str += `<label id="${key}-error" class="error" for="${key}">${value}</label>`;
+                    $("#" + key).addClass("error");
+                });
+                $("#modalSuperiorRegistration .modal-body .modal-alert-danger").html(str);
+            });
+        });
+
+        $("#btnCreateDeluxe").on("click", function () {
+            room.id = $("#roomIdDLX").val();
+
+            reservation.bookingCode = Math.floor(Math.random() * 9000) + 1000;
+            reservation.fullName = $("#fullNameDLX").val();
+            reservation.email = $("#emailDLX").val();
+            reservation.phone = $("#phoneDLX").val();
+            reservation.address = $("#addressDLX").val();
+            reservation.guaranteeFee = $("#guaranteeFeeDLX").val();
+            reservation.methodPayment = $("#methodPaymentDLX").val();
+            reservation.room = room;
+
+            $.ajax({
+                type: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: page.urls.saveNew,
+                data: JSON.stringify(reservation)
+            }).done( (data) => {
+                reservation = data;
+
+                App.showSuccessAlert("Booking Successful!");
+
+                $('#modalDeluxeRegistration').modal('hide');
+
+            }).fail( (jqXHR, textStatus, errorThrown) => {
+                $("#modalDeluxeRegistration .modal-body .modal-alert-danger").empty();
+                $("#modalDeluxeRegistration .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+
+                let str = ``;
+                $.each( jqXHR.responseJSON, function( key, value ) {
+                    str += `<label id="${key}-error" class="error" for="${key}">${value}</label>`;
+                    $("#" + key).addClass("error");
+                });
+                $("#modalDeluxeRegistration .modal-body .modal-alert-danger").html(str);
+            });
+        });
+
+        $("#btnCreateSuite").on("click", function () {
+
+            room.id = $("#roomIdSUT").val();
+
+            let bookingCode = Math.floor(Math.random()*9000) + 1000;
+
+            reservation.bookingCode = bookingCode;
+            reservation.fullName = $("#fullNameSUT").val();
+            reservation.email = $("#emailSUT").val();
+            reservation.phone = $("#phoneSUT").val();
+            reservation.address = $("#addressSUT").val();
+            reservation.guaranteeFee = $("#guaranteeFeeSUT").val();
+            reservation.methodPayment = $("#methodPaymentSUT").val();
+            reservation.room = room;
+
+            $.ajax({
+                type: "POST",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: page.urls.saveNew,
+                data: JSON.stringify(reservation)
+            }).done( (data) => {
+                reservation = data;
+
+                App.showSuccessAlert("Booking Successful! Your BookingCode is:" + bookingCode);
+
+                $('#modalSuiteRegistration').modal('hide');
+
+            }).fail( (jqXHR, textStatus, errorThrown) => {
+                $("#modalSuiteRegistration .modal-body .modal-alert-danger").empty();
+                $("#modalSuiteRegistration .modal-body .modal-alert-danger").removeClass("hide").addClass("show");
+
+                let str = ``;
+                $.each( jqXHR.responseJSON, function( key, value ) {
+                    str += `<label id="${key}-error" class="error" for="${key}">${value}</label>`;
+                    $("#" + key).addClass("error");
+                });
+                $("#modalSuiteRegistration .modal-body .modal-alert-danger").html(str);
+            });
+        });
+
+        $('#modalStandardRegistration').on('hidden.bs.modal', function () {
+            $("#currentRow").val("");
+            $("#modalStandardRegistration .modal-body .modal-alert-danger").empty();
+            $("#modalStandardRegistration .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalStandardRegistration input.error").removeClass("error");
+            $('#frmStandardRegistration')[0].reset();
+            $('#frmStandardRegistration').validate().resetForm();
+        });
+
+        $('#modalSuperiorRegistration').on('hidden.bs.modal', function () {
+            $("#currentRow").val("");
+            $("#modalSuperiorRegistration .modal-body .modal-alert-danger").empty();
+            $("#modalSuperiorRegistration .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalSuperiorRegistration input.error").removeClass("error");
+            $('#frmSuperiorRegistration')[0].reset();
+            $('#frmSuperiorRegistration').validate().resetForm();
+        });
+
+        $('#modalDeluxeRegistration').on('hidden.bs.modal', function () {
+            $("#currentRow").val("");
+            $("#modalDeluxeRegistration .modal-body .modal-alert-danger").empty();
+            $("#modalDeluxeRegistration .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalDeluxeRegistration input.error").removeClass("error");
+            $('#frmDeluxeRegistration')[0].reset();
+            $('#frmDeluxeRegistration').validate().resetForm();
+        });
+
+        $('#modalSuiteRegistration').on('hidden.bs.modal', function () {
+            $("#currentRow").val("");
+            $("#modalSuiteRegistration .modal-body .modal-alert-danger").empty();
+            $("#modalSuiteRegistration .modal-body .modal-alert-danger").removeClass("show").addClass("hide");
+            $("#modalSuiteRegistration input.error").removeClass("error");
+            $('#frmSuiteRegistration')[0].reset();
+            $('#frmSuiteRegistration').validate().resetForm();
+        });
+    </script>
+</div>
+</body>
+</html>

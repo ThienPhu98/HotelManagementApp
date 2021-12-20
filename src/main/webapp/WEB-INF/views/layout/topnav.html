@@ -1,0 +1,95 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment ="topnav">
+    <header id="topnav">
+        <div class="navbar-custom">
+            <div class="container-fluid">
+
+                <ul class="list-unstyled topnav-menu float-right mb-0" style="padding-top: 18px" >
+                    <button type="button" class="btn btn-light">
+                        <i class="bi bi-person-workspace"></i>
+                        Sign-In or Join
+                    </button>
+                </ul>
+
+                <div class="logo-box">
+                    <a href="/home" class="logo text-center logo-light">
+                                <span class="logo-lg">
+                                    <img src="/assets/admin-dashboard/images/LogoName.png" alt="" height="58">
+                                </span>
+                    </a>
+
+                    <a href="/home" class="logo text-center logo-dark">
+                                <span class="logo-lg">
+                                    <img src="/assets/admin-dashboard/images/LogoName.png" alt="" height="58">
+                                </span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="topbar-menu">
+            <div class="container-fluid">
+                <div id="navigation">
+                    <ul class="navigation-menu html-editor-align-center">
+
+                        <li class="has-submenu">
+                            <a>
+                                <i class="bi bi-journals"></i>
+                                Reservation <div class="arrow-down"></div>
+                            </a>
+                            <ul class="submenu megamenu">
+                                <li>
+                                    <ul>
+                                        <li><a href="/booking">
+                                            <i class="bi bi-journal-plus"></i> Booking
+                                        </a></li>
+                                        <li><a href="/findBooking">
+                                            <i class="bi bi-search"></i> Finding
+                                        </a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="has-submenu">
+                            <a>
+                                <i class="bi bi-house"></i>
+                                 In-house Service <div class="arrow-down"></div>
+                            </a>
+                            <ul class="submenu megamenu">
+                                <li>
+                                    <ul>
+                                        <li><a href="ui-typography.html"><i class="fas fa-concierge-bell"></i> Restaurant</a></li>
+                                        <li><a href="ui-modals.html"><i class="far fa-handshake"></i> Meeting</a></li>
+                                        <li><a href="ui-modals.html"><i class="fas fa-ring"></i> Weddings</a></li>
+                                        <li><a href="ui-cards.html"><i class="fas fa-swimmer"></i> Swimming Pool</a></li>
+                                        <li><a href="ui-buttons.html"><i class="fas fa-hot-tub"></i> Spa</a></li>
+                                        <li><a href="ui-modals.html"><i class="fas fa-hands-wash"></i> Laundry</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="has-submenu">
+                            <a>
+                                <i class="fas fa-umbrella-beach"></i>
+                                 Event
+                            </a>
+                        </li>
+
+                        <li class="has-submenu">
+                            <a>
+                                <i class="fas fa-percent"></i>
+                                 Promotion
+                            </a>
+                        </li>
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+</th:block>
