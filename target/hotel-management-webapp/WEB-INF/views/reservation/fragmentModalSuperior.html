@@ -12,9 +12,9 @@
                     <div class="modal-alert-danger hide"></div>
                     <form id="frmSuperiorRegistration" method="post">
                         <fieldset class="row g-3">
-                            <div class="col-md-12">
+                            <div class="col-md-12" hidden>
                                 <label class="form-label">Room Type</label>
-                                <input type="text" class="form-control" id="roomIdSUP" name="roomId" value="02" hidden>
+                                <input type="text" class="form-control" id="roomIdSUP" name="roomId" value="02">
                             </div>
 
                             <div class="col-md-6">
@@ -23,12 +23,12 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Email</label>
-                                <input type="text" class="form-control" id="emailSUP" name="email">
+                                <input type="email" class="form-control" id="emailSUP" name="email">
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">Phone</label>
-                                <input type="tel" class="form-control" id="phoneSUP" name="phone">
+                                <input type="number" class="form-control" id="phoneSUP" name="phone">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Address</label>
@@ -60,7 +60,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" id="btnCreateSuperior" class="btn btn-outline-primary">
                         <i class="fa fa-plus" aria-hidden="true"></i>
-                        Create customer
+                        Create Reservation
                     </button>
                 </div>
             </div>

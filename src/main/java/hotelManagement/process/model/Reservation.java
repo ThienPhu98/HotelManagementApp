@@ -10,10 +10,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
-import javax.validation.constraints.Digits;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
@@ -41,7 +38,11 @@ public class Reservation {
     @Size(min = 5, max = 50, message = "The length of email must be between 5 and 50 characters")
     private String email;
 
+    @NotBlank(message = "The phone is required")
+    @Size(min = 10, max = 11, message = "phone number invalid! phone number long must be 10 or 11")
     private String phone;
+
+    @NotBlank(message = "The address is required")
     private String address;
 
     @Column(columnDefinition = "boolean default false")
@@ -50,7 +51,7 @@ public class Reservation {
     @Column(columnDefinition = "boolean default false")
     private boolean checkedIn;
 
-    @Digits(integer = 12, fraction = 0)
+    @Digits(integer = 12, fraction = 0, message = "guaranteeFee invalid! guarantee fee must be 0 or less than 1 billion")
     @Column(updatable = false)
     private BigDecimal guaranteeFee;
 

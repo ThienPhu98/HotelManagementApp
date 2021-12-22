@@ -12,9 +12,9 @@
                     <div class="modal-alert-danger hide"></div>
                     <form id="frmStandardRegistration" method="post">
                         <fieldset class="row g-3">
-                            <div class="col-md-12">
+                            <div class="col-md-12" hidden>
                                 <label class="form-label">Room Type</label>
-                                <input type="text" class="form-control" id="roomIdSTD" name="roomId" value="01" hidden>
+                                <input type="text" class="form-control" id="roomIdSTD" name="roomId" value="01" >
                             </div>
 
                             <div class="col-md-6">
@@ -23,12 +23,12 @@
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Email</label>
-                                <input type="text" class="form-control" id="emailSTD" name="email">
+                                <input type="email" class="form-control" id="emailSTD" name="email">
                             </div>
 
                             <div class="col-md-6">
                                 <label class="form-label">Phone</label>
-                                <input type="tel" class="form-control" id="phoneSTD" name="phone">
+                                <input type="number" class="form-control" id="phoneSTD" name="phone">
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label">Address</label>
@@ -42,7 +42,7 @@
                             <div class="col-md-6">
                                 <label class="form-label">Guarantee Fee</label>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" id="guaranteeFeeSTD" name="guaranteeFee" style="text-align: right">
+                                    <input type="number" class="form-control " id="guaranteeFeeSTD" name="guaranteeFee" style="text-align: right">
                                     <span class="input-group-text" id="inputGroupPrepend1">$</span>
                                 </div>
                             </div>
@@ -60,7 +60,7 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     <button type="button" id="btnCreateStandard" class="btn btn-outline-primary">
                         <i class="fa fa-plus" aria-hidden="true"></i>
-                        Create customer
+                        Create Reservation
                     </button>
                 </div>
             </div>

@@ -3,7 +3,6 @@
 <head>
   <th:block th:replace="~{/layout/head::head}" />
   <title>findReservation</title>
-  <th:block th:replace="~{/layout/script::scriptAll}" />
 </head>
 <body data-layout="horizontal">
 
@@ -17,8 +16,10 @@
             <div class="page-title-box">
               <div class="page-title-right">
                 <ol class="breadcrumb m-0">
-                  <li class="breadcrumb-item"><a href="javascript: void(0);">Home</a></li>
-                  <li class="breadcrumb-item active">findReservation</li>
+                  <li class="breadcrumb-item"><a href="javascript: void(0);">
+                    <i class="bi bi-house"></i>
+                    Home</a></li>
+                  <li class="breadcrumb-item active">find-Reservation</li>
                 </ol>
               </div>
               <h4 class="page-title">Find Your Reservation</h4>
@@ -31,8 +32,62 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-md-6">
-
+          <form method="post">
+            <div class="mb-3">
+              <label for="bookingCode" class="form-label">Booking Code</label>
+              <input type="text" class="form-control" id="bookingCode" name="bookingCode" placeholder="Enter Your BookingCode" required>
+              <div id="emailHelp" class="form-text">We'll send confirm permission to your Email! please check and accept it</div>
+            </div>
+            <button type="submit" class="btn btn-primary">Find</button>
+          </form>
+          <div class="alert alert-danger" role="alert" th:if="${message}">
+            <span th:text="${message}"></span>
+          </div>
         </div>
+
+        <th:block th:if="${reservation}">
+          <div class="col-md-6">
+            <div class="card">
+              <div class="card-body">
+                <div class="card" style="width: 30rem;">
+                  <div th:switch="${room.id}">
+                    <p th:case="1">
+                      <img src="/assets/image/standard.jpg" class="card-img-top">
+                    </p>
+                    <p th:case="2">
+                      <img src="/assets/image/superior.jpg" class="card-img-top">
+                    </p>
+                    <p th:case="3">
+                      <img src="/assets/image/deluxe.png" class="card-img-top">
+                    </p>
+                    <p th:case="4">
+                      <img src="/assets/image/suite.jpg" class="card-img-top">
+                    </p>
+                  </div>
+                  <div class="card-body">
+                    <h5 class="card-title">Your Information</h5>
+                    <label for="validationDefault01" class="card-text" >Full name</label>
+                    <input type="text" class="card-text" id="validationDefault01" th:value="${reservation.getFullName()()}" name = "full_name" readonly>
+                    <p class="card-text">Email: </p>
+                    <p class="card-text">Phone: </p>
+                    <p class="card-text">Address: </p>
+                    <p class="card-text">Guarantee Fee: </p>
+                    <p class="card-text">Method Payment: </p>
+                    <p class="card-text">RoomType:</p>
+                    <a class="btn btn-outline-primary">
+                      <i class="fas fa-user-edit"></i> Edit
+                    </a>
+                    <a class="btn btn-outline-danger">
+                      <i class="fas fa-user-times"></i> Delete
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </th:block>
+
+
       </div>
     </div>
 
@@ -40,6 +95,18 @@
   </div>
 
   <th:block th:replace="~{/layout/right-bar::right-bar}" />
+
+  <th:block th:replace="~{/layout/script::scriptAll}" />
+
+  <script>
+
+    let page = {
+      urls: {
+        saveNew: "http://localhost:8080/api/bookings/edit"
+      }
+    }
+
+  </script>
 </div>
 </body>
 </html>
